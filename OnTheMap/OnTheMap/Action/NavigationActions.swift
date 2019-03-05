@@ -23,5 +23,13 @@ class NavigationActions {
     }
 
     
+    static func alertController(title:String, actionTitle:String, message:String) -> UIAlertController {
+        // Alert controller's title for eg. "Login Failed"
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        // eg. OK
+        alertVC.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
+        return alertVC
+    }
+    
     
 }
