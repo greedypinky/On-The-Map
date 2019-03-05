@@ -11,7 +11,7 @@ import MapKit
 
 class AddLocationMapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
-    let searchMapQuery:String // this will be a pass in string
+    let searchMapQuery:String? = nil // this will be a pass in string
     override func viewDidLoad() {
         super.viewDidLoad()
 
