@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class StudentLocationMapViewController: UIViewController, MKMapViewDelegate  {
+@objc class StudentLocationMapViewController: UIViewController, MKMapViewDelegate  {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -30,20 +30,23 @@ class StudentLocationMapViewController: UIViewController, MKMapViewDelegate  {
     
     override func viewWillAppear(_ animated: Bool) {
         
-       prepareNavigationBarButtons()
-        
+      prepareNavigationBarButtons()
+//        NavigationActions.initRightNavigationBarButtons(item: navigationItem, reload: #selector(NavigationActions.reload), add: #selector(addStudentMapLocation()))
+//        NavigationActions.initLeftNavigationBarButtons(item: navigationItem, logout: #selector(NavigationActions.logout))
     }
 
     private func prepareNavigationBarButtons() {
-//        let logoutButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem., target: self, action: #selector(logout))
-        
-        let logoutButton = UIBarButtonItem(image: nil, style: UIBarButtonItem.Style.plain, target: self, action: #selector(logout))
+       
+
+        let logoutButton = UIBarButtonItem(image: nil, style: UIBarButtonItem.Style.plain, target: self, action: #selector(NavigationActions.logout))
         logoutButton.title = "LOGOUT"
-        let reloadButton = UIBarButtonItem(image: UIImage(named: "icon_refresh"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(reload))
-        
+        let reloadButton = UIBarButtonItem(image: UIImage(named: "icon_refresh"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(NavigationActions.reload))
+
         let addButton = UIBarButtonItem(image: UIImage(named: "icon_addpin"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(addStudentMapLocation))
-        navigationItem.setRightBarButtonItems([addButton,reloadButton], animated: true)
-        navigationItem.setLeftBarButton(logoutButton, animated: true)
+//        navigationItem.setRightBarButtonItems([addButton,reloadButton], animated: true)
+//        navigationItem.setLeftBarButton(logoutButton, animated: true)
+          navigationItem.setRightBarButtonItems([addButton,reloadButton], animated: true)
+          navigationItem.setLeftBarButton(logoutButton, animated: true)
     }
     
     /*
@@ -61,17 +64,25 @@ class StudentLocationMapViewController: UIViewController, MKMapViewDelegate  {
         UdacityAPI.requestPostLogout()
         print("LOGOUT!")
     }
-    
-    @objc func reload() {
-        // reload the info? do the latest request
-        // The rightmost bar button will be a refresh button.
-        // Clicking on the button will refresh the entire data set by downloading and displaying the most recent 100 posts made by students.
-        print("reload!")
-    }
-    
-    @objc private func addStudentMapLocation() {
+//
+//    @objc func reload() {
+//        // reload the info? do the latest request
+//        // The rightmost bar button will be a refresh button.
+//        // Clicking on the button will refresh the entire data set by downloading and displaying the most recent 100 posts made by students.
+//        print("reload!")
+//    }
+//
+    @objc func addStudentMapLocation() {
         // Navigate to the add student information page
         print("add student")
+        
+      let postlocationNavController = storyboard?.instantiateViewController(withIdentifier: "postLocationNavigation") as! UINavigationController
+//         let findLocationNavController = storyboard?.instantiateViewController(withIdentifier: "findlocation") as! FindLocationViewController
+//        let locationPostingViewController = storyboard?.instantiateViewController(withIdentifier: "postlocation") as! LocationPostingViewController
+        
+        // On iPhone and iPod touch devices, the view of modalViewController is always presented full screen. On iPad, the presentation depends on the value in the modalPresentationStyle property.
+        //present(locationPostingViewController, animated: true, completion: nil)
+       present(postlocationNavController, animated: true, completion: nil)
     }
     
     func handleGetStudentInfos(studentInfos:[StudentInformation]?, error:Error?) {
@@ -160,4 +171,6 @@ class StudentLocationMapViewController: UIViewController, MKMapViewDelegate  {
             }
         }
     }
+    
+   
 }

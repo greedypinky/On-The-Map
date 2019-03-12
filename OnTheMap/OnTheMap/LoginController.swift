@@ -97,5 +97,9 @@ class LoginController: UIViewController, UITextFieldDelegate {
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         show(alertVC, sender: nil)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //
+    }
 }
 
