@@ -8,14 +8,14 @@
 
 import Foundation
 // request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
-struct NewLocation:Codable {
-    var uniqueKey:String
-    var firstName:String?
-    var lastName:String?
-    var mediaURL:String
-    var geocode:String
-    var mapString:String
-    var latitude:String
-    var longtitude:String
+struct NewLocation : Codable {
+    let uniqueKey:String
+    let firstName:String?
+    let lastName:String?
+    let mediaURL:String
+    let geocode:String
+    let mapString:String
+    let latitude:Double
+    let longtitude:Double
     
 }

@@ -15,7 +15,8 @@ class PostLocationViewController: UIViewController {
     var boundingRegion: MKCoordinateRegion?
     var mapItems: [MKMapItem]?
     
-    var placeName:String
+    var placeName:String?
+    var mediaURL:String?
 
     @IBOutlet weak var finishButton: UIButton!
     
@@ -42,10 +43,25 @@ class PostLocationViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
+    /*
+ struct NewLocation:Codable {
+ let uniqueKey:String
+ let firstName:String?
+ let lastName:String?
+ let mediaURL:String
+ let geocode:String
+ let mapString:String
+ let latitude:String
+ let longtitude:String
+ }
+ */
     @IBAction func sendPostLocationRequest(_ sender: Any) {
         // TODO: add back the NewLocation post data
 //        let newLocation:NewLocation
+        let lat:Double = boundingRegion?.center.latitude ?? 0.0
+        let long:Double = boundingRegion?.center.longitude ?? 0.0
+        let newLocation:Codable = NewLocation(uniqueKey:Auth.uniqueKey,firstName:"", lastName:"", mediaURL:mediaURL!, geocode:"",mapString:placeName!, latitude:lat, longtitude:long)
+      //  let newLocation:Codable = NewLocation()
 //        ParseAPI.requestPostStudentInfo(postData: NewLocation, completionHandler: handlePostLocationReponse(postlocation:error:))
         
     }
@@ -68,12 +84,27 @@ class PostLocationViewController: UIViewController {
     func setRegion() {
         if let region = boundingRegion {
             mapView.setRegion(region, animated: true)
+            
         }
     }
     
-    func handlePostLocationReponse(postlocation:PostLocationResponse?, error:Error?) {
+    func handlePostLocationReponse(postLocationResponse:PostLocationResponse?, error:Error?) {
         
+        guard let response = postLocationResponse else {
+            // If the submission fails to post the data to the server, then the user should see an alert with an error message describing the failure.
+            let alertVC = UIAlertController(title: "Add Location", message: error?.localizedDescription, preferredStyle: .alert)
+            // eg. OK
+            alertVC.addAction(UIAlertAction(title:"OK" , style: UIAlertAction.Style.default, handler: { (action) in
+                // dismiss the page
+                self.dismiss(animated: true, completion: nil)
+            })
+            )
+            return
+        }
         
-        
+        // Likewise, if the submission succeeds, then the Information Posting View should be dismissed, returning the app to the Map and Table Tabbed View.
+        print("Location is created at \(response.createAt)")
+        dismiss(animated: true, completion: nil)
+     
     }
 }
