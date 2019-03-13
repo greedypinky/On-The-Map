@@ -22,6 +22,7 @@ import Foundation
 struct Auth {
     static var accountId = 0
     static var sessionId = ""
+    static var uniqueKey = ""
 }
 
 struct Account: Codable {

@@ -19,6 +19,7 @@ class ParseAPI {
         
         case getStudentLocations(limit:String?)
         case getSingleStudent(uniqueKey:String)
+        case postStudentLocation()
         
         /*
          skip - (Number) use this parameter with limit to paginate through results
@@ -32,6 +33,7 @@ class ParseAPI {
             return URL(string: self.stringValue)!
         }
         
+        // calculated value
         var stringValue:String {
             
             switch self {
@@ -44,6 +46,9 @@ class ParseAPI {
                 }
             case .getSingleStudent(let uniqueKey):
                 return "https://parse.udacity.com/parse/classes/StudentLocation?where={uniqueKey:\(uniqueKey)}"
+                
+            case .postStudentLocation:
+                return "https://parse.udacity.com/parse/classes/StudentLocation"
                
             default:
                 return ""
@@ -112,34 +117,42 @@ class ParseAPI {
         
     }
     
-    class func requestPostStudentInfo(postData:String, completionHandler: (String?,Error?)->Void) {
-        let endpoint:URL = URL(string:"https://parse.udacity.com/parse/classes/StudentLocation")!
+    class func requestPostStudentInfo(postData:NewLocation, completionHandler: @escaping (PostLocationResponse?,Error?)->Void) {
+        let endpoint:URL = ParseEndpoint.postStudentLocation().url
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         request.addValue(APIRequestKey.applicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(APIRequestKey.restapikey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         //        request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".data(using: .utf8)
         
-        request.httpBody = postData.data(using: .utf8)
-        let downloadTask = URLSession.shared.dataTask(with: endpoint) {
+        let jsonEncoder = JSONEncoder()
+        let encodedPostData = try! jsonEncoder.encode(postData)
+        request.httpBody = encodedPostData
+        //request.httpBody = encodedPostData.data(using: .utf8)
+        let downloadTask = URLSession.shared.dataTask(with: request) {
             (data, response, error) in
-            
             
             // guard there is data
             guard let data = data else {
                 // TODO: CompleteHandler can return error
+                DispatchQueue.main.async {
+                    completionHandler(nil,error)
+                }
                 return
             }
             
-            //        let jsonDecoder = JSONDecoder()
-            //        do {
-            //
-            //           // let data = try jsonDecoder.decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: <#T##Data#>)
-            //           completionHandler(data,nil)
-            //
-            //        } catch {
-            //              completionHandler(nil,error)
-            //        }
+            let jsonDecoder = JSONDecoder()
+            do {
+                let decodedData = try jsonDecoder.decode(PostLocationResponse.self, from: data)
+                print(decodedData)
+                DispatchQueue.main.async {
+                    completionHandler(decodedData,nil)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completionHandler(nil,error)
+                }
+            }
         }
         
         downloadTask.resume()

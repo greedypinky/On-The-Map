@@ -14,6 +14,8 @@ class PostLocationViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     var boundingRegion: MKCoordinateRegion?
     var mapItems: [MKMapItem]?
+    
+    var placeName:String
 
     @IBOutlet weak var finishButton: UIButton!
     
@@ -42,7 +44,9 @@ class PostLocationViewController: UIViewController {
     */
     
     @IBAction func sendPostLocationRequest(_ sender: Any) {
-        
+        // TODO: add back the NewLocation post data
+//        let newLocation:NewLocation
+//        ParseAPI.requestPostStudentInfo(postData: NewLocation, completionHandler: handlePostLocationReponse(postlocation:error:))
         
     }
     
@@ -67,4 +71,9 @@ class PostLocationViewController: UIViewController {
         }
     }
     
+    func handlePostLocationReponse(postlocation:PostLocationResponse?, error:Error?) {
+        
+        
+        
+    }
 }

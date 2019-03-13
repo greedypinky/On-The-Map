@@ -64,6 +64,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
            return
         }
         Auth.sessionId = userInfo.session.id
+        Auth.uniqueKey = userInfo.account.key
         performSegue(withIdentifier: "showMapInfo", sender: nil)
     }
     
