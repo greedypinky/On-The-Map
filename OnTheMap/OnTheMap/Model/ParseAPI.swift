@@ -123,13 +123,13 @@ class ParseAPI {
         request.httpMethod = "POST"
         request.addValue(APIRequestKey.applicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(APIRequestKey.restapikey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-        //        request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".data(using: .utf8)
+        //request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".data(using: .utf8)
         
         let jsonEncoder = JSONEncoder()
         let encodedPostData = try! jsonEncoder.encode(postData)
         request.httpBody = encodedPostData
-        request.url?.absoluteString
-        print("DEBUG===== \( request.url?.absoluteString) ======")
+        //request.url?.absoluteString
+        //print("DEBUG===== \( request.url?.absoluteString) ======")
         //request.httpBody = encodedPostData.data(using: .utf8)
         let downloadTask = URLSession.shared.dataTask(with: request) {
             (data, response, error) in
@@ -144,9 +144,23 @@ class ParseAPI {
                 return
             }
             
+            // DEBUG ==============================
+//            do{
+//                let jsonSerial =  try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
+//
+//               let code = jsonSerial["code"] as! String
+//
+//               let err = jsonSerial["error"] as! String
+//
+//            } catch {
+//                print(error)
+//            }
+            
             let jsonDecoder = JSONDecoder()
             do {
-                print(data)
+                print(data.base64EncodedString())
+                
+                
                 let decodedData = try jsonDecoder.decode(PostLocationResponse.self, from: data)
                 print(decodedData)
                 DispatchQueue.main.async {

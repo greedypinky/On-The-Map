@@ -69,6 +69,7 @@ class AddLocationMapViewController: UIViewController {
     
     func showLoginFailure(message: String) {
         let alertVC = NavigationActions.alertController(title: "Search Failed", actionTitle: "OK", message: "Failed: \(message)")
+        alertVC.view.center = self.view.center
         show(alertVC, sender: nil)
     }
     

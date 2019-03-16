@@ -28,6 +28,13 @@ class FindLocationViewController: UIViewController {
 
     @IBAction func findLocation(_ sender: Any) {
         
+        
+        let activityView = UIActivityIndicatorView(style: .gray)
+        activityView.center = self.view.center
+        activityView.startAnimating()
+        
+        self.view.addSubview(activityView)
+        
         guard let location = location.text else {
             print("location cannot be empty")
             let alert = NavigationActions.alertController(title:"Location cannot be empty!", actionTitle: "Find location failed!", message: "OK")
@@ -40,7 +47,7 @@ class FindLocationViewController: UIViewController {
             print("mediaURL cannot be empty")
             let actionTitle = "Find location failed!"
             let alert = NavigationActions.alertController(title:"Media URL cannot be empty!", actionTitle: actionTitle, message: "OK")
-            
+            alert.view.center = self.view.center
 //            let alertVC = UIAlertController(title: "Media URL cannot be empty!", message: "Find location failed!", preferredStyle: .alert)
 //            // eg. OK
 //            alertVC.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
@@ -61,7 +68,10 @@ class FindLocationViewController: UIViewController {
          The map region that encloses the returned search results.
          */
         
+        
+        
         localSearch.start { (response,error) in
+            activityView.stopAnimating()
             // handle the error
             guard let response = response else {
                 print(error!)
@@ -86,7 +96,10 @@ class FindLocationViewController: UIViewController {
         // dismiss(animated: true, completion: nil)
     }
     
-    
+    func startActivityIndicator() {
+        
+        
+    }
     // TODO: add Address
     // TODO: add mediaURL
     // TODO: add Find Location Button
@@ -119,6 +132,7 @@ class FindLocationViewController: UIViewController {
 
     func showLoginFailure(message: String) {
         let alertVC = NavigationActions.alertController(title: "Search Failed", actionTitle: "OK", message: "Failed: \(message)")
+        alertVC.view.center = self.view.center
         show(alertVC, sender: nil)
     }
 

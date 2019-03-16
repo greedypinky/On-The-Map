@@ -12,8 +12,8 @@ struct NewLocation : Codable {
     let uniqueKey:String
     let firstName:String?
     let lastName:String?
-    let mediaURL:String
     let mapString:String
+    let mediaURL:String
     let latitude:Double
-    let longtitude:Double
+    let longitude:Double
 }

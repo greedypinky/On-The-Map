@@ -23,7 +23,6 @@ class PostLocationViewController: UIViewController {
      let firstName:String?
      let lastName:String?
      let mediaURL:String
-     let geocode:String
      let mapString:String
      let latitude:String
      let longtitude:String
@@ -34,7 +33,7 @@ class PostLocationViewController: UIViewController {
         let lat:Double = boundingRegion?.center.latitude ?? 0.0
         let long:Double = boundingRegion?.center.longitude ?? 0.0
         // found nil while unwrapping value
-        let newLocation = NewLocation(uniqueKey:Auth.uniqueKey,firstName:"", lastName:"", mediaURL:mediaURL!,mapString:location!, latitude:lat, longtitude:long)
+        let newLocation = NewLocation(uniqueKey:Auth.uniqueKey,firstName:"", lastName:"", mapString:location!, mediaURL:mediaURL!, latitude:lat, longitude:long)
         //  let newLocation:Codable = NewLocation()
         ParseAPI.requestPostStudentInfo(postData: newLocation, completionHandler: handlePostLocationReponse(postLocationResponse:error:))
     }
@@ -82,6 +81,7 @@ class PostLocationViewController: UIViewController {
         guard let response = postLocationResponse else {
             // If the submission fails to post the data to the server, then the user should see an alert with an error message describing the failure.
             // TODO: need to fix the position for the Alert Dialog
+            print(error!)
             let alertVC = UIAlertController(title: "Add Location", message: error?.localizedDescription, preferredStyle: .alert)
             // eg. OK
             alertVC.addAction(UIAlertAction(title:"OK" , style: UIAlertAction.Style.default, handler: { (action) in
@@ -89,7 +89,7 @@ class PostLocationViewController: UIViewController {
                 self.dismiss(animated: true, completion: nil)
             })
             )
-            show(alertVC, sender: nil)
+            present(alertVC, animated: true, completion: nil)
             return
         }
         

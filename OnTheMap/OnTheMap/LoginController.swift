@@ -9,6 +9,8 @@ import UIKit
 
 class LoginController: UIViewController, UITextFieldDelegate {
 
+    let signUpURL = "https://www.udacity.com/account/auth#!/signup"
+    @IBOutlet weak var doNotHaveAccountLabel: UILabel!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -22,6 +24,27 @@ class LoginController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         // put your code here
         resetLogin()
+        
+        // Set the "Sign Up" string with underline style
+        let label = doNotHaveAccountLabel?.text
+        let underlineAttriString = NSMutableAttributedString(string: label!)
+        let range1 = (label! as NSString).range(of: "Sign Up")
+        underlineAttriString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range1)
+        doNotHaveAccountLabel?.attributedText = underlineAttriString
+        // set the "Sign Up" with tab gesture
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabSignUpOpenLinkAction))
+        doNotHaveAccountLabel.addGestureRecognizer(tapRecognizer)
+        doNotHaveAccountLabel.isUserInteractionEnabled = true
+        
+    }
+    
+    // open URL https://www.udacity.com/account/auth#!/signup.
+    @objc func tabSignUpOpenLinkAction() {
+        // open Safari with the Udacity Sign-in link
+        print("open url from Safari")
+        if let url = URL(string: signUpURL) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 
     // Click on LOGON button

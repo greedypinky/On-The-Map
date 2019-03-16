@@ -33,7 +33,7 @@ class StudentLocationTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // prepareNavigationBarButtons(navItem:navigationItem)
-        NavigationActions.initRightNavigationBarButtons(item: navigationItem, reload: #selector(NavigationActions.reload), add: #selector(NavigationActions.addStudentMapLocation))
+        NavigationActions.initRightNavigationBarButtons(item: navigationItem, reload: #selector(reload), add: #selector(NavigationActions.addStudentMapLocation))
         NavigationActions.initLeftNavigationBarButtons(item: navigationItem, logout: #selector(NavigationActions.logout))
     }
     
@@ -91,12 +91,15 @@ class StudentLocationTableViewController: UITableViewController {
             // reload the info? do the latest request
             // The rightmost bar button will be a refresh button.
             // Clicking on the button will refresh the entire data set by downloading and displaying the most recent 100 posts made by students.
-            print("reload!")
+            ParseAPI.requestGetStudents(completionHandler: handleGetStudentInfos(infos:error:))
         }
+    
         
         @objc func addStudentMapLocation() {
             // Navigate to the add student information page
             print("add student")
+            let postlocationNavController = storyboard?.instantiateViewController(withIdentifier: "postLocationNavigation") as! UINavigationController
+            present(postlocationNavController, animated: true, completion: nil)
         }
         
         
