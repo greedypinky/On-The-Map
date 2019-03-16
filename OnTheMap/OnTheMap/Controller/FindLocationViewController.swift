@@ -20,6 +20,9 @@ class FindLocationViewController: UIViewController {
     
     @IBOutlet weak var findLocationButton: UIButton!
     
+    
+    var postLocation:String?
+    var postMediaURL:String?
     var mapItems:[MKMapItem]?
     var boundingRegion:MKCoordinateRegion?
 
@@ -71,6 +74,8 @@ class FindLocationViewController: UIViewController {
             // else the search is successful, then show the map view
             self.mapItems = response.mapItems
             self.boundingRegion = response.boundingRegion
+            self.postLocation = location
+            self.postMediaURL = mediaURL
             
             if response.mapItems.count > 0 {
                 self.performSegue(withIdentifier: "toPostLocationMap", sender: nil)
@@ -124,6 +129,8 @@ class FindLocationViewController: UIViewController {
            let postLocationVC = navController.topViewController as! PostLocationViewController
             postLocationVC.boundingRegion = boundingRegion!
             postLocationVC.mapItems = mapItems!
+            postLocationVC.location = postLocation!
+            postLocationVC.mediaURL = postMediaURL!
         }
     }
     

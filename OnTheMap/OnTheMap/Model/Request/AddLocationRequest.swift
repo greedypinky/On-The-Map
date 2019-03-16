@@ -13,9 +13,7 @@ struct NewLocation : Codable {
     let firstName:String?
     let lastName:String?
     let mediaURL:String
-    let geocode:String
     let mapString:String
     let latitude:Double
     let longtitude:Double
-    
 }

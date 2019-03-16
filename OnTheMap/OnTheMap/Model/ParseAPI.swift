@@ -128,6 +128,8 @@ class ParseAPI {
         let jsonEncoder = JSONEncoder()
         let encodedPostData = try! jsonEncoder.encode(postData)
         request.httpBody = encodedPostData
+        request.url?.absoluteString
+        print("DEBUG===== \( request.url?.absoluteString) ======")
         //request.httpBody = encodedPostData.data(using: .utf8)
         let downloadTask = URLSession.shared.dataTask(with: request) {
             (data, response, error) in
@@ -135,6 +137,7 @@ class ParseAPI {
             // guard there is data
             guard let data = data else {
                 // TODO: CompleteHandler can return error
+                print(error!)
                 DispatchQueue.main.async {
                     completionHandler(nil,error)
                 }
@@ -143,6 +146,7 @@ class ParseAPI {
             
             let jsonDecoder = JSONDecoder()
             do {
+                print(data)
                 let decodedData = try jsonDecoder.decode(PostLocationResponse.self, from: data)
                 print(decodedData)
                 DispatchQueue.main.async {

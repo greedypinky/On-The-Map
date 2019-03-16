@@ -276,7 +276,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="sendPostLocationRequest:" destination="53a-fM-OYE" eventType="touchUpInside" id="Z1k-gI-5YB"/>
+                                    <action selector="postLocation:" destination="53a-fM-OYE" eventType="touchUpInside" id="YCc-2z-Wtj"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -12,6 +12,6 @@ import Foundation
  "objectId":"CDHfAy8sdp"
  } */
 struct PostLocationResponse :Codable {
-    let createAt:String
+    let createdAt:String
     let objectId:String
 }
