@@ -111,9 +111,36 @@ class UdacityAPI {
         downloadTask.resume()
     }
     
-    class func requestPostLogout() {
+    class func requestPostLogout(completion: @escaping () -> Void) {
         
+        let endpoint:URL = UdacityEndpoint.login.url
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "DELETE"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN"{
+                xsrfCookie = cookie
+            }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            
+            let range = 5..<data!.count
+            let newData = data?.subdata(in: range)
+            Auth.accountId = 0
+            Auth.sessionId = ""
+            Auth.uniqueKey = ""
+            completion()
+            /* subset response data! */
+        }
+        task.resume()
         
     }
     

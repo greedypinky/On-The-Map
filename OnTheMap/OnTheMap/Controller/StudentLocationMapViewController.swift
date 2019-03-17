@@ -29,22 +29,17 @@ import MapKit
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
       prepareNavigationBarButtons()
-//        NavigationActions.initRightNavigationBarButtons(item: navigationItem, reload: #selector(NavigationActions.reload), add: #selector(addStudentMapLocation()))
-//        NavigationActions.initLeftNavigationBarButtons(item: navigationItem, logout: #selector(NavigationActions.logout))
     }
 
     private func prepareNavigationBarButtons() {
        
 
-        let logoutButton = UIBarButtonItem(image: nil, style: UIBarButtonItem.Style.plain, target: self, action: #selector(NavigationActions.logout))
+        let logoutButton = UIBarButtonItem(image: nil, style: UIBarButtonItem.Style.plain, target: self, action: #selector(logout))
         logoutButton.title = "LOGOUT"
         let reloadButton = UIBarButtonItem(image: UIImage(named: "icon_refresh"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(reload))
 
         let addButton = UIBarButtonItem(image: UIImage(named: "icon_addpin"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(addStudentMapLocation))
-//        navigationItem.setRightBarButtonItems([addButton,reloadButton], animated: true)
-//        navigationItem.setLeftBarButton(logoutButton, animated: true)
           navigationItem.setRightBarButtonItems([addButton,reloadButton], animated: true)
           navigationItem.setLeftBarButton(logoutButton, animated: true)
     }
@@ -58,13 +53,7 @@ import MapKit
         // Pass the selected object to the new view controller.
     }
     */
-   // need to expose this instance method to be used in Objective-C
-    @objc func logout() {
-        // Need send a request to delete the SessionID to logout
-        UdacityAPI.requestPostLogout()
-        print("LOGOUT!")
-    }
-//
+
     @objc func reload() {
         // reload the info? do the latest request
         // The rightmost bar button will be a refresh button.
@@ -72,15 +61,7 @@ import MapKit
         ParseAPI.requestGetStudents(completionHandler: handleGetStudentInfos(studentInfos:error:))
         print("reload!")
     }
-//
-    @objc func addStudentMapLocation() {
-        // Navigate to the add student information page
-        print("add student")
-        
-      let postlocationNavController = storyboard?.instantiateViewController(withIdentifier: "postLocationNavigation") as! UINavigationController
-        // Present Modaly
-       present(postlocationNavController, animated: true, completion: nil)
-    }
+
     
     func handleGetStudentInfos(studentInfos:[StudentInformation]?, error:Error?) {
         guard let studentInfos = studentInfos else {
@@ -169,5 +150,5 @@ import MapKit
         }
     }
     
-   
+  
 }
