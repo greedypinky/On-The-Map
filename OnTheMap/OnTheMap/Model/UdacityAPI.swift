@@ -66,8 +66,7 @@ class UdacityAPI {
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
-       // let loginUser = User(username: username, password: password)
-        let loginUser:User = User(username: "ritalaw04@gmail.com", password: "rita@829")
+        let loginUser = User(username: username, password: password)
         let udacity = Udacity.init(udacity: loginUser)
         let jsonEncoder = JSONEncoder()
         let postData = try! jsonEncoder.encode(udacity)

@@ -128,11 +128,15 @@ class ParseAPI {
         request.httpMethod = "POST"
         request.addValue(APIRequestKey.applicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(APIRequestKey.restapikey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         //request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".data(using: .utf8)
         
         let jsonEncoder = JSONEncoder()
         let encodedPostData = try! jsonEncoder.encode(postData)
-        request.httpBody = encodedPostData
+         request.httpBody = encodedPostData
+         print(encodedPostData)
         //request.url?.absoluteString
         //print("DEBUG===== \( request.url?.absoluteString) ======")
         //request.httpBody = encodedPostData.data(using: .utf8)
