@@ -95,6 +95,7 @@ class PostLocationViewController: UIViewController {
         
         // Likewise, if the submission succeeds, then the Information Posting View should be dismissed, returning the app to the Map and Table Tabbed View.
         print("Location is created at \(response.createdAt)")
+        
         dismiss(animated: true, completion: nil)
      
     }

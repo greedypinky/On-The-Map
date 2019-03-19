@@ -20,6 +20,7 @@ class ParseAPI {
         case getStudentLocations(limit:String?)
         case getSingleStudent(uniqueKey:String)
         case postStudentLocation()
+        case putStudentLocation(uniqueKey:String)
         
         /*
          skip - (Number) use this parameter with limit to paginate through results
@@ -49,6 +50,8 @@ class ParseAPI {
                 
             case .postStudentLocation:
                 return "https://parse.udacity.com/parse/classes/StudentLocation"
+            case .putStudentLocation(let uniqueKey):
+                return "https://parse.udacity.com/parse/classes/StudentLocation/\(uniqueKey)"
                
             default:
                 return ""
@@ -153,26 +156,16 @@ class ParseAPI {
                 completionHandler(nil,error)
                 return
             }
-            print("===== what is the data?? \(data) ======")
-            // now decode the response :)
-            
-            // guard there is data
-//            guard let data = data else {
-//                // TODO: CompleteHandler can return error
-//                print(error!)
-//                DispatchQueue.main.async {
-//                    completionHandler(nil,error)
-//                }
-//                return
-//            }
             
             // DEBUG ==============================
-//            do{
+//            do {
 //                let jsonSerial =  try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
 //
-//               let code = jsonSerial["code"] as! String
+//               let createdAt = jsonSerial["createdAt"] as! String
 //
-//               let err = jsonSerial["error"] as! String
+//               let objectId = jsonSerial["objectId"] as! String
+//
+//                print("created at \(createdAt) objectId: \(objectId)" )
 //
 //            } catch {
 //                print(error)
@@ -197,8 +190,9 @@ class ParseAPI {
         downloadTask.resume()
     }
     
-    class func requestPutStudentInfo(postData:String, completionHandler: (String?,Error?)->Void) {
-        let endpoint:URL = URL(string:"https://parse.udacity.com/parse/classes/StudentLocation/8ZExGR5uX8")!
+    class func requestPutStudentInfo(key:String, postData:String, completionHandler: (String?,Error?)->Void) {
+        // let endpoint:URL = URL(string:"https://parse.udacity.com/parse/classes/StudentLocation/8ZExGR5uX8")!
+        let endpoint:URL = ParseEndpoint.putStudentLocation(uniqueKey:key).url
         var request = URLRequest(url: endpoint)
         request.httpMethod = "PUT"
         request.addValue(APIRequestKey.applicationID, forHTTPHeaderField: "X-Parse-Application-Id")

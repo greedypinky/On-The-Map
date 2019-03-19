@@ -11,7 +11,7 @@ import Foundation
  "createdAt":"2015-03-11T02:48:18.321Z",
  "objectId":"CDHfAy8sdp"
  } */
-struct PostLocationResponse :Codable {
-    let createdAt:Int
+struct PostLocationResponse:Codable {
+    let createdAt:String
     let objectId:String
 }

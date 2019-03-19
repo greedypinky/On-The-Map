@@ -237,12 +237,13 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lSt-6h-8ao">
-                                <rect key="frame" x="177" y="390" width="20" height="20"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lSt-6h-8ao">
+                                <rect key="frame" x="177" y="392" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="lSt-6h-8ao" firstAttribute="centerX" secondItem="UfU-oW-C5y" secondAttribute="centerX" id="Lfo-GY-Fi9"/>
                             <constraint firstItem="lSt-6h-8ao" firstAttribute="firstBaseline" secondItem="S7L-bT-SsX" secondAttribute="baseline" constant="11.5" symbolType="layoutAnchor" id="asD-Gf-AXP"/>
                             <constraint firstItem="S7L-bT-SsX" firstAttribute="leading" secondItem="UfU-oW-C5y" secondAttribute="leading" constant="25" id="gJt-t7-kBV"/>
                             <constraint firstItem="UfU-oW-C5y" firstAttribute="trailing" secondItem="S7L-bT-SsX" secondAttribute="trailing" constant="25" id="u5z-Xc-6eH"/>

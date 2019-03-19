@@ -155,7 +155,7 @@ class StudentLocationTableViewController: UITableViewController {
             print(error!)
             return
         }
-        StudentLocationData.shared.setInfo(studentInfos: studentInfos)
+        StudentLocationData.shared.setInfo(studentInfos: infos)
         studentInfos = StudentLocationData.shared.studentInfos
         print(studentInfos)
         DispatchQueue.main.async {

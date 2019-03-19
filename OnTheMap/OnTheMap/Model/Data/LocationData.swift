@@ -9,12 +9,10 @@
 import Foundation
 class StudentLocationData {
     static let shared = StudentLocationData()
-    var studentInfos:[StudentInformation]?=[]
+    var studentInfos:[StudentInformation]=[]
     
     private init() {
-        guard let _ = studentInfos else {
-            fatalError("Error - data is not setup!")
-        }
+
     }
     
     func setInfo(studentInfos:[StudentInformation]) {
