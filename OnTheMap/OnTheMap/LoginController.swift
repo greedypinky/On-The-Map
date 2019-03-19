@@ -52,9 +52,13 @@ class LoginController: UIViewController, UITextFieldDelegate {
         // TODO: Requirement - The app informs the user if the login fails. It differentiates between a failure to connect, and incorrect credentials (i.e., wrong email or password).
         
         guard let user = userName.text , !user.isEmpty else {
+            // add the alert for feedback suggestion
+            showLoginFailure(message: "user name is invalid!")
             return
         }
         guard let pwd = password.text , !pwd.isEmpty else {
+            // add the alert for feedback suggestion
+            showLoginFailure(message: "password is invalid!")
             return
         }
  

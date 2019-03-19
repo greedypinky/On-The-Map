@@ -7,6 +7,17 @@
 //
 
 import Foundation
-class LocationData {
-    static var studentInformations:[StudentInformation] = []
+class StudentLocationData {
+    static let shared = StudentLocationData()
+    var studentInfos:[StudentInformation]?=[]
+    
+    private init() {
+        guard let _ = studentInfos else {
+            fatalError("Error - data is not setup!")
+        }
+    }
+    
+    func setInfo(studentInfos:[StudentInformation]) {
+        self.studentInfos = studentInfos
+    }
 }

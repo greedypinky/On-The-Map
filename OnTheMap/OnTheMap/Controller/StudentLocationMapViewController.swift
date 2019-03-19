@@ -68,6 +68,7 @@ import MapKit
             print(error!)
             return
         }
+        StudentLocationData.shared.setInfo(studentInfos: studentInfos)
         createMapAnnotation(studentInfos:studentInfos)
     }
     

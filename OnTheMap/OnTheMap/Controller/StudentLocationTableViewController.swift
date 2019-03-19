@@ -19,9 +19,11 @@ class StudentLocationTableViewController: UITableViewController {
         let tabItems = self.tabBarController?.tabBar.items
         tabItems?[0].image = UIImage(named: "icon_mapview-deselected") // mapview tab is de-selected
         tabItems?[1].image = UIImage(named: "icon_listview-selected") // listview tab is selected
-        
-        ParseAPI.requestGetStudents(completionHandler: handleGetStudentInfos(infos:error:))
-        
+        guard StudentLocationData.shared.studentInfos.count > 0 else {
+            ParseAPI.requestGetStudents(completionHandler: handleGetStudentInfos(infos:error:))
+            return
+        }
+        studentInfos = StudentLocationData.shared.studentInfos
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -153,7 +155,8 @@ class StudentLocationTableViewController: UITableViewController {
             print(error!)
             return
         }
-        studentInfos = infos
+        StudentLocationData.shared.setInfo(studentInfos: studentInfos)
+        studentInfos = StudentLocationData.shared.studentInfos
         print(studentInfos)
         DispatchQueue.main.async {
             // reload table

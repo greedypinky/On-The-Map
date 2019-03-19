@@ -143,15 +143,28 @@ class ParseAPI {
         let downloadTask = URLSession.shared.dataTask(with: request) {
             (data, response, error) in
             
-            // guard there is data
-            guard let data = data else {
-                // TODO: CompleteHandler can return error
-                print(error!)
-                DispatchQueue.main.async {
-                    completionHandler(nil,error)
-                }
+            //first check the error
+            guard error == nil else {
+                completionHandler(nil,error)
                 return
             }
+            // then the data
+            guard let data = data, data.count != 0 else {
+                completionHandler(nil,error)
+                return
+            }
+            print("===== what is the data?? \(data) ======")
+            // now decode the response :)
+            
+            // guard there is data
+//            guard let data = data else {
+//                // TODO: CompleteHandler can return error
+//                print(error!)
+//                DispatchQueue.main.async {
+//                    completionHandler(nil,error)
+//                }
+//                return
+//            }
             
             // DEBUG ==============================
 //            do{
@@ -165,10 +178,9 @@ class ParseAPI {
 //                print(error)
 //            }
             
+            // decode the response
             let jsonDecoder = JSONDecoder()
             do {
-                print(data.base64EncodedString())
-                
                 
                 let decodedData = try jsonDecoder.decode(PostLocationResponse.self, from: data)
                 print(decodedData)

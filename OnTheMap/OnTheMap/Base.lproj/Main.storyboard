@@ -237,9 +237,13 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lSt-6h-8ao">
+                                <rect key="frame" x="177" y="390" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="lSt-6h-8ao" firstAttribute="firstBaseline" secondItem="S7L-bT-SsX" secondAttribute="baseline" constant="11.5" symbolType="layoutAnchor" id="asD-Gf-AXP"/>
                             <constraint firstItem="S7L-bT-SsX" firstAttribute="leading" secondItem="UfU-oW-C5y" secondAttribute="leading" constant="25" id="gJt-t7-kBV"/>
                             <constraint firstItem="UfU-oW-C5y" firstAttribute="trailing" secondItem="S7L-bT-SsX" secondAttribute="trailing" constant="25" id="u5z-Xc-6eH"/>
                             <constraint firstItem="S7L-bT-SsX" firstAttribute="top" secondItem="UfU-oW-C5y" secondAttribute="top" constant="25" id="z4l-my-AL0"/>
@@ -248,6 +252,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="baL-q1-Zcr"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="lSt-6h-8ao" id="y7I-38-niN"/>
                         <outlet property="findLocationButton" destination="Ufa-8h-n7c" id="m27-iP-hMn"/>
                         <outlet property="location" destination="CJO-Xw-Ab7" id="pae-7A-fSV"/>
                         <outlet property="url" destination="4gK-Ur-L6j" id="nkn-jy-nUl"/>
