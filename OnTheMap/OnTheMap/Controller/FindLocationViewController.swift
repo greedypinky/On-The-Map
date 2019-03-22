@@ -106,8 +106,8 @@ class FindLocationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // TODO: pass the info to AddLocationMapViewController
         if (segue.identifier == "toPostLocationMap") {
-           let navController = segue.destination as! UINavigationController
-           let postLocationVC = navController.topViewController as! PostLocationViewController
+            let postLocationVC  = segue.destination as! PostLocationViewController
+            //let postLocationVC = navController.topViewController as! PostLocationViewController
             postLocationVC.boundingRegion = boundingRegion!
             postLocationVC.mapItems = mapItems!
             postLocationVC.location = postLocation!
