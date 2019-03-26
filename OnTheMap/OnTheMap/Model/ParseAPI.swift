@@ -95,36 +95,10 @@ class ParseAPI {
         
         downloadTask.resume()
     }
-    
-    /*
-     {
-     "results":[
-     {
-     "createdAt":"2015-02-24T22:35:30.639Z",
-     "firstName":"John",
-     "lastName":"Doe",
-     "latitude":37.322998,
-     "longitude":-122.032182,
-     "mapString":"Cupertino, CA",
-     "mediaURL":"https://udacity.com",
-     "objectId":"8ZEuHF5uX8",
-     "uniqueKey":"1234",
-     "updatedAt":"2015-03-11T02:42:59.217Z"
-     }
-     ]
-     }
-     */
-    class func requestGetSingleStudentInfo() {
-        
-        
-        
-    }
-    
-    
+
     /*
      https://parse.udacity.com/parse/classes/StudentLocation?X-Parse-Application-Id=QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr&X-Parse-REST-API-Key=QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY&uniqueKey=062306453106&firstName=rita&lastName=law&mapString=Mountain View&mediaURL=https://udacity.com&latitude=37.386052&longitude=-122.083851
     */
-    // class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, Error?) -> Void)
     class func requestPostStudentInfo(postData:NewLocation, completionHandler: @escaping (PostLocationResponse?,Error?)->Void) {
         let endpoint:URL = ParseEndpoint.postStudentLocation().url
         var request = URLRequest(url: endpoint)
@@ -140,9 +114,6 @@ class ParseAPI {
         let encodedPostData = try! jsonEncoder.encode(postData)
          request.httpBody = encodedPostData
          print(encodedPostData)
-        //request.url?.absoluteString
-        //print("DEBUG===== \( request.url?.absoluteString) ======")
-        //request.httpBody = encodedPostData.data(using: .utf8)
         let downloadTask = URLSession.shared.dataTask(with: request) {
             (data, response, error) in
             
@@ -176,6 +147,51 @@ class ParseAPI {
             do {
                 
                 let decodedData = try jsonDecoder.decode(PostLocationResponse.self, from: data)
+                print(decodedData)
+                DispatchQueue.main.async {
+                    completionHandler(decodedData,nil)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completionHandler(nil,error)
+                }
+            }
+        }
+        
+        downloadTask.resume()
+    }
+    
+    class func requestPostStudentInfoGeneric<RequestType: Encodable, ResponseType: Decodable>(postData:RequestType, responseType: ResponseType.Type, completionHandler: @escaping (ResponseType?,Error?)->Void) {
+        let endpoint:URL = ParseEndpoint.postStudentLocation().url
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.addValue(APIRequestKey.applicationID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(APIRequestKey.restapikey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let jsonEncoder = JSONEncoder()
+        let encodedPostData = try! jsonEncoder.encode(postData)
+        request.httpBody = encodedPostData
+        print(encodedPostData)
+        let downloadTask = URLSession.shared.dataTask(with: request) {
+            (data, response, error) in
+            
+            //first check the error
+            guard error == nil else {
+                completionHandler(nil,error)
+                return
+            }
+            // then the data
+            guard let data = data, data.count != 0 else {
+                completionHandler(nil,error)
+                return
+            }
+            // decode the response
+            let jsonDecoder = JSONDecoder()
+            do {
+                
+                let decodedData = try jsonDecoder.decode(ResponseType.self, from: data)
                 print(decodedData)
                 DispatchQueue.main.async {
                     completionHandler(decodedData,nil)

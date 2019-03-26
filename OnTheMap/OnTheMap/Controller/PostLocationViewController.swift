@@ -32,10 +32,10 @@ class PostLocationViewController: UIViewController {
         
         let lat:Double = boundingRegion?.center.latitude ?? 0.0
         let long:Double = boundingRegion?.center.longitude ?? 0.0
-        // found nil while unwrapping value
         let newLocation = NewLocation(uniqueKey:Auth.uniqueKey,firstName:"Test", lastName:"Testlastname", mapString:location!, mediaURL:mediaURL!, latitude:lat, longitude:long)
-        //  let newLocation:Codable = NewLocation()
-        ParseAPI.requestPostStudentInfo(postData: newLocation, completionHandler: handlePostLocationReponse(postLocationResponse:error:))
+        // ParseAPI.requestPostStudentInfo(postData: newLocation, completionHandler: handlePostLocationReponse(postLocationResponse:error:))
+        // Try to use Generic
+        ParseAPI.requestPostStudentInfoGeneric(postData: newLocation, responseType: PostLocationResponse.self, completionHandler: handlePostLocationReponse(postLocationResponse:error:))
     }
    
     @IBOutlet weak var finishButton: UIButton!
