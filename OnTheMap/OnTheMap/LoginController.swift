@@ -8,7 +8,7 @@
 import UIKit
 
 class LoginController: UIViewController, UITextFieldDelegate {
-
+    
     let signUpURL = "https://www.udacity.com/account/auth#!/signup"
     @IBOutlet weak var doNotHaveAccountLabel: UILabel!
     @IBOutlet weak var logoImage: UIImageView!
@@ -20,7 +20,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         // put your code here
         resetLogin()
@@ -46,7 +46,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
-
+    
     // Click on LOGON button
     @IBAction func login(_ sender: Any) {
         // TODO: Requirement - The app informs the user if the login fails. It differentiates between a failure to connect, and incorrect credentials (i.e., wrong email or password).
@@ -61,50 +61,38 @@ class LoginController: UIViewController, UITextFieldDelegate {
             showLoginFailure(message: "password is invalid!")
             return
         }
- 
-        // Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: '-[UIKeyboardTaskQueue waitUntilAllTasksAreFinished] may only be called from the main thread.'
         
-        
-        UdacityAPI.requestPostLogin(username: user, password: pwd, completionHandler: handleLoginResponse(userInfo:error:))
-
+        //        UdacityAPI.requestPostLogin(username: user, password: pwd, completionHandler: handleLoginResponse(userInfo:error:))
+        let loginUser = User(username: user, password: pwd)
+        let udacityLogin = Udacity.init(udacity: loginUser)
+        UdacityAPI.requestPostLoginGeneric(udacityLogin: udacityLogin, responseType: UserInfo.self, completionHandler: handleLoginResponse(userInfo:error:))
     }
     
     // should be getting back a list of Student Information ?
     /* {
-        "account":{
-        "registered":true,
-        "key":"3903878747"
-        },
-        "session":{
-        "id":"1457628510Sc18f2ad4cd3fb317fb8e028488694088",
-        "expiration":"2015-05-10T16:48:30.760460Z"
-        }
-    } */
+     "account":{
+     "registered":true,
+     "key":"3903878747"
+     },
+     "session":{
+     "id":"1457628510Sc18f2ad4cd3fb317fb8e028488694088",
+     "expiration":"2015-05-10T16:48:30.760460Z"
+     }
+     } */
     func handleLoginResponse(userInfo:UserInfo?, error:Error?) {
-       // 1. Get back the session ID
-       // 2. then trigger another request ?
-       // eg. DogAPI.requestImageFile(url: imageURL, completionHandler: self.handleImageResponse(image:error:))
-       // get back the StudentInformation LIST, past to the segue when prepare the Seqgue
+        // 1. Get back the session ID
+        // 2. then trigger another request ?
+        // eg. DogAPI.requestImageFile(url: imageURL, completionHandler: self.handleImageResponse(image:error:))
+        // get back the StudentInformation LIST, past to the segue when prepare the Seqgue
         guard let userInfo = userInfo else {
-           print("Login error \(error!)")
-           showLoginFailure(message: NSLocalizedString("Failed to login", comment: "Failed to login"))
-           return
+            print("Login error \(error!)")
+            showLoginFailure(message: NSLocalizedString("Failed to login", comment: "Failed to login"))
+            return
         }
         Auth.sessionId = userInfo.session.id
         Auth.uniqueKey = userInfo.account.key
         performSegue(withIdentifier: "showMapInfo", sender: nil)
     }
-    
-    // Could not cast value of type 'UITabBarController' (0x1170075c0) to
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showMapInfo" {
-//            let tabBarController = segue.destination as! UITabBarController
-//            let navControlller = tabBarController.viewControllers![0] as! UINavigationController
-//            let mapViewController = navControlller.topViewController as! StudentLocationMapViewController
-//            mapViewController.sessionID = sessionID!
-//            // exception 'NSInternalInconsistencyException', reason: '-[UIKeyboardTaskQueue waitUntilAllTasksAreFinished] may only be called from the main thread.
-//        }
-//    }
     
     private func resetLogin() {
         userName.text = ""
@@ -126,8 +114,5 @@ class LoginController: UIViewController, UITextFieldDelegate {
         show(alertVC, sender: nil)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //
-    }
 }
 
