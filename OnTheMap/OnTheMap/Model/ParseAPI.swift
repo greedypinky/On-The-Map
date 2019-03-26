@@ -95,10 +95,7 @@ class ParseAPI {
         
         downloadTask.resume()
     }
-
-    /*
-     https://parse.udacity.com/parse/classes/StudentLocation?X-Parse-Application-Id=QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr&X-Parse-REST-API-Key=QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY&uniqueKey=062306453106&firstName=rita&lastName=law&mapString=Mountain View&mediaURL=https://udacity.com&latitude=37.386052&longitude=-122.083851
-    */
+    
     class func requestPostStudentInfo(postData:NewLocation, completionHandler: @escaping (PostLocationResponse?,Error?)->Void) {
         let endpoint:URL = ParseEndpoint.postStudentLocation().url
         var request = URLRequest(url: endpoint)
@@ -240,38 +237,4 @@ class ParseAPI {
         
         downloadTask.resume()
     }
-    
-    /*
-    class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, Error?) -> Void) -> URLSessionDataTask {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    completion(nil, error)
-                }
-                return
-            }
-            let decoder = JSONDecoder()
-            do {
-                let responseObject = try decoder.decode(ResponseType.self, from: data)
-                DispatchQueue.main.async {
-                    completion(responseObject, nil)
-                }
-            } catch {
-                do {
-                    let errorResponse = try decoder.decode(TMDBResponse.self, from: data) as Error
-                    DispatchQueue.main.async {
-                        completion(nil, errorResponse)
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        completion(nil, error)
-                    }
-                }
-            }
-        }
-        task.resume()
-        
-        return task
-    }
-     */
 }
